@@ -9,6 +9,7 @@ class DeviceDisplay {
 public:
   DeviceDisplay(TwoWire *wire = &Wire);
 
+  void begin();
   void showLedStatus(const String &ledName, bool isOn);
   void showDHT22Readings(float temperature, float humidity);
   void showPoteValue(int poteValue);

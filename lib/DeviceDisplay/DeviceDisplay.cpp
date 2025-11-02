@@ -2,13 +2,7 @@
 
 DeviceDisplay::DeviceDisplay(TwoWire *wire)
     : _display(128, 64, wire, -1) {
-  _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-  _display.clearDisplay();
-  _display.setTextSize(1);
-  _display.setTextColor(SSD1306_WHITE);
-  _display.setCursor(0, 0);
-  _display.display();
-      // Wire.begin();
+  // Déjalo vacío
 }
 
 void DeviceDisplay::showLedStatus(const String &ledName, bool isOn) {
@@ -38,5 +32,14 @@ void DeviceDisplay::showPoteValue(int poteValue) {
   _display.setCursor(0, 0);
   _display.println("Valor Pote:");
   _display.println(poteValue);
+  _display.display();
+}
+
+void DeviceDisplay::begin() {
+  _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  _display.clearDisplay();
+  _display.setTextSize(1);
+  _display.setTextColor(SSD1306_WHITE);
+  _display.setCursor(0, 0);
   _display.display();
 }

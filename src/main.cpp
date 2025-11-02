@@ -107,7 +107,7 @@ void handleMessages(int n){
       float temperatura = dht22.readTemperature();
       float humedad = dht22.readHumidity();
       // thingSpeakClient.sendData(temperatura, humedad);
-      sendToThingSpeak(temperatura, humedad);
+      thingSpeakClient.sendData(temperatura, humedad);
 
       bot.sendMessage(chat_id, "Datos enviados a ThingSpeak.", "");
     }
@@ -123,7 +123,7 @@ void handleMessages(int n){
       display.showDHT22Readings(temperatura, humedad);
     }
     else if(text == "/displayPote"){
-      int valor_pote = analogRead(pinPote);
+      int valor_pote = pote.read();
       display.showPoteValue(valor_pote);
     }
     else if(text.startsWith("/display")){
@@ -139,6 +139,7 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   Wire.begin();
+  display.begin();
 
   previus = 0;
   Serial.print("Conectando a WiFi");
@@ -188,4 +189,3 @@ void sendToThingSpeak(float temperature, float humidity) {
     Serial.println("WiFi no conectado");
   }
 }
-
