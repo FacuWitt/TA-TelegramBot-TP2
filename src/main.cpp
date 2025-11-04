@@ -14,7 +14,6 @@
 #include "DeviceLED.h"
 #include "DeviceDisplay.h"
 
-const int pinDHT22 = 14; // Pin del sensor DHT22
 
 const char *SSID = "Wokwi-GUEST";
 const char *PASS = "";
@@ -25,7 +24,8 @@ const unsigned long SCAN_TIME = 1000;
 
 const int pinLED_2 = 2;
 const int pinLED_23 = 23;
-const int pinPote = 34; // Pin del potenciómetro
+const int pinPote = 32; // Pin del potenciómetro
+const int pinDHT22 = 33; // Pin del sensor DHT22
 
 
 String apiKey = "L8TEPTW9E18XF6QL";
