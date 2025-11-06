@@ -15,8 +15,8 @@
 #include "DeviceDisplay.h"
 
 
-const char *SSID = "Wokwi-GUEST";
-const char *PASS = "";
+const char *SSID = "iPhone de Valentina";
+const char *PASS = "valentina.";
 
 
 const char * BOT_TOKEN = "7124446827:AAFv--a_PUer1BIEvi0C3gihOJ1_zACVnqk";
@@ -48,7 +48,6 @@ WiFiClientSecure secured_client;
 UniversalTelegramBot bot(BOT_TOKEN, secured_client); // HTTPS
 unsigned long previus;
 
-void sendToThingSpeak(float temperature, float humidity);
 
 void handleMessages(int n){
   // Barre menasajes nuevos, cada cierto tiempo n
@@ -56,8 +55,8 @@ void handleMessages(int n){
   for(size_t i = 0; i < n; i++){
     String chat_id = bot.messages[i].chat_id; // informativo
     String text = bot.messages[i].text;  // contenido de cada mensaje
+
     // MENSAJE DE BIENVENIDA + mostrar opciones del menu
-      //bot.sendMessage(chat_id, "Chat iniciado\n Comandos:\n\t/LedOn: Enciende Led \n\t /LedOff: Apagar LED");
     if(text == "/start"){
       String welcome = "¡Bienvenido! Soy tu bot de ESP32.\n";
       welcome += "Comandos disponibles:\n";
@@ -76,19 +75,19 @@ void handleMessages(int n){
 
       bot.sendMessage(chat_id, welcome, "");
     }
-    else if(text == "/led23On"){ // Usar else if
+    else if(text == "/led23On"){ 
       led23.on();
       bot.sendMessage(chat_id, "LED encendido", "");
     }
-    else if(text == "/led23Off"){ // Usar else if
+    else if(text == "/led23Off"){ 
       led23.off();
       bot.sendMessage(chat_id, "LED apagado", "");
     }
-    else if(text == "/led2On"){ // Usar else if
+    else if(text == "/led2On"){ 
       led2.on();
       bot.sendMessage(chat_id, "LED encendido", "");
     }
-    else if(text == "/led2Off"){ // Usar else if
+    else if(text == "/led2Off"){ 
       led2.off();
       bot.sendMessage(chat_id, "LED apagado", "");
     }
@@ -106,7 +105,6 @@ void handleMessages(int n){
     else if(text == "/platiot"){
       float temperatura = dht22.readTemperature();
       float humedad = dht22.readHumidity();
-      // thingSpeakClient.sendData(temperatura, humedad);
       thingSpeakClient.sendData(temperatura, humedad);
 
       bot.sendMessage(chat_id, "Datos enviados a ThingSpeak.", "");
@@ -140,6 +138,7 @@ void setup() {
   Serial.begin(115200);
   Wire.begin();
   display.begin();
+  display.showLedStatus("Inicializando", true);
 
   previus = 0;
   Serial.print("Conectando a WiFi");
@@ -165,27 +164,4 @@ void loop() {
     previus = millis();
   }
 
-}
-
-void sendToThingSpeak(float temperature, float humidity) {
-  if (WiFi.status() == WL_CONNECTED) {
-    HTTPClient http;
-
-    // Construir la URL de envío
-    String url = server + String("?api_key=") + apiKey +
-                 "&field1=" + String(temperature) +
-                 "&field2=" + String(humidity);
-
-    http.begin(url);
-    int httpCode = http.GET();
-
-    if (httpCode > 0) {
-      Serial.printf("ThingSpeak: %d\n", httpCode);
-    } else {
-      Serial.println("Error en HTTP");
-    }
-    http.end();
-  } else {
-    Serial.println("WiFi no conectado");
-  }
 }

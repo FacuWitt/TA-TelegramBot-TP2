@@ -36,10 +36,10 @@ void DeviceDisplay::showPoteValue(int poteValue) {
 }
 
 void DeviceDisplay::begin() {
-  _display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+  _display.begin(0x3C, true);
   _display.clearDisplay();
   _display.setTextSize(1);
-  _display.setTextColor(SSD1306_WHITE);
+  _display.setTextColor(SH110X_WHITE);
   _display.setCursor(0, 0);
   _display.display();
 }

@@ -2,7 +2,7 @@
 #ifndef _DEVICEDISPLAY_H
 #define _DEVICEDISPLAY_H
 #include <Arduino.h>
-#include <Adafruit_SSD1306.h>
+#include <Adafruit_SH110X.h>
 #include <Wire.h>
 
 class DeviceDisplay {
@@ -24,7 +24,7 @@ public:
 //   void setTextColor(uint16_t color);
 
 private:
-  Adafruit_SSD1306 _display;
+  Adafruit_SH1106G _display;
 };
 
 #endif
